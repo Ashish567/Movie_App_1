@@ -1,0 +1,28 @@
+/* .headerForUpcomingMovies
+{
+    text-align: center;
+    background-color:#ff9999;
+} */
+
+
+.headerForUpcomingMovies {
+    background-color: #ff9999;
+    font-size: 1rem;
+    padding: 8px;
+    text-align: center;
+}
+
+.masterDivider
+{
+    display: flex;
+}
+
+.left
+{
+    width: 76%;
+}
+
+.right
+{
+    width: 24%;
+}
