@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
@@ -6,6 +6,7 @@ import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import itemData from "./tileData";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,22 +49,14 @@ const useStyles = makeStyles((theme) => ({
  */
 export default function SingleLineImageList() {
   const classes = useStyles();
-  console.log("hello");
-  console.log(itemData.movies);
-  // const arr = itemData.movies.map((item) => (
-  //   <ImageListItem key={item.poster_url}>
-  //     <img src={item.poster_url} alt={item.title} />
-  //     <ImageListItemBar
-  //       title={item.title}
-  //       classes={{
-  //         root: classes.titleBar,
-  //         title: classes.title,
-  //       }}
-  //     />
-  //   </ImageListItem>
-  // ));
-  // console.log("here is the array");
-  // console.log(arr);
+  const [tileData, settileData] = useState({ movies: [] });
+  React.useEffect(() => {
+    fetch("http://localhost:8085/api/v1/movies?page=1&limit=10")
+      .then((results) => results.json())
+      .then((data) => {
+        settileData({ ...tileData, ...data });
+      });
+  }, []);
 
   return (
     <div className={classes.root}>
