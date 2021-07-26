@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Modalz from "./Modal";
-import Form1 from "./Form1.js";
+import { useLocation } from "react-router-dom";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const location = useLocation();
+  console.log("header " + location.pathname);
+  console.log(location.pathname.toString() === "/details");
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -55,9 +58,18 @@ export default function Header() {
   return (
     <div className="header">
       <img src={Logo} alt="React Logo" className="logo" />
-      <Button variant="contained" className="button" onClick={handleOpen}>
-        Login
-      </Button>
+      <div>
+        {location.pathname.toString() === "/details" ? (
+          <Button variant="contained" className="button1" onClick={handleOpen}>
+            Book Show
+          </Button>
+        ) : (
+          console.log("hello")
+        )}
+        <Button className="button2" variant="contained" onClick={handleOpen}>
+          Login
+        </Button>
+      </div>
       <Modal
         open={open}
         onClose={handleClose}

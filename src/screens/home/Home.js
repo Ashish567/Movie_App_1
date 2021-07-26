@@ -12,7 +12,7 @@ export default function Home() {
       <div className="headerForUpcomingMovies">
         <p>Upcoming Movies</p>
       </div>
-      <GridTileList />
+      <GridTileList style={{ width: "100%" }} />
       <br />
       <div className="masterDivider">
         <div className="left">

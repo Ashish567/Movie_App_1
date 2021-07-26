@@ -1,10 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, browserHistory } from "react-router";
+// import { Router, browserHistory } from "react-router";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./index.css";
 import "typeface-roboto";
 import registerServiceWorker from "./registerServiceWorker";
 import Controller from "./screens/Controller";
+import Details from "./screens/details/Details";
+import history from "./history";
 
 import routes from "./routes";
 import store from "./store.js";
@@ -14,7 +17,12 @@ import { Provider } from "react-redux";
 
 ReactDOM.render(
   <Provider store={store}>
-    <Controller />
+    <Router>
+      <Switch>
+        <Route exact activeRoute path="/" exact component={Controller} />
+        <Route path="/details" component={Details} />
+      </Switch>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );

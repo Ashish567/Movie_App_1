@@ -14,6 +14,8 @@ import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import { connect } from "react-redux";
 import { getMovies } from "../../Actions/usersActions";
 
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -57,7 +59,9 @@ function GridList2(props) {
       {props.movies.movies.map((item) => (
         <GridListTile key={item.poster_url} className={classes.imageList}>
           <img src={item.poster_url} alt={item.title} />
-          <GridListTileBar title={item.title} className={classes.titleBar} />
+          <Link to="/details">
+            <GridListTileBar title={item.title} className={classes.titleBar} />
+          </Link>
         </GridListTile>
       ))}
     </GridList>

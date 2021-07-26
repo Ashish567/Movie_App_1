@@ -10,17 +10,22 @@
     overflow: hidden;
 }
 
-.button
+.button2
 {
-    /* text-align: right; 
-    margin: 200px;  */
     position: absolute;
-    left: 90%;
-    bottom: 13px;
-    display: flex;
-    /* margin-bottom: 32px; */
-    /* align-content: flex-end; */
-    /* text-align: right; */
+    left: 87%;
+    /* width: 100%; */
+    bottom: 39px;
+
+}
+
+.button1
+{
+    position: absolute;
+    left: 85%;
+    /* width: 120%; */
+    bottom: 39px;
+
 }
 
 .logo
