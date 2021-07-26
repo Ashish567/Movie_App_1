@@ -44,8 +44,7 @@ function Details(props) {
   const [moviez, setMovie] = useState([]);
   console.log("movie");
   console.log(props);
-  console.log(props.getMovie("7d174a25-ba31-45a8-85b4-b06ffc9d5f8f"));
-  console.log("after dispatching");
+ 
   console.log(props.movies);
   const movie = {
     id: "8d71c3b8-a293-11e8-9a3a-720006ceb890",
