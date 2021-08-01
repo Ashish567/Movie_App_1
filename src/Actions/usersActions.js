@@ -2,7 +2,7 @@ import { GET_MOVIES, MOVIES_ERROR, FILTER_MOVIES, GET_MOVIE } from "../types";
 import axios from "axios";
 // page=1&limit=20
 export const getMovies = (options) => async (dispatch) => {
-  console.log("action called");
+  console.log("action called for multiple movies");
   try {
     const res = await axios.get(`http://localhost:8085/api/v1/movies?`, {
       params: {

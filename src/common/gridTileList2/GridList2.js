@@ -12,7 +12,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import { connect } from "react-redux";
-import { getMovies } from "../../Actions/usersActions";
+import { getMovies, getMovie } from "../../Actions/usersActions";
 
 import { Link } from "react-router-dom";
 
@@ -42,11 +42,17 @@ const useStyles = makeStyles((theme) => ({
 
 function GridList2(props) {
   const [movieList, setMovies] = useState([]);
+  const [movie, setMovie] = useState();
   const classes = useStyles();
 
   React.useEffect(() => {
     props.getMovies({ page: 1, limit: 20 });
+    console.log("1st loaded");
+    // console.log(getMovie);
+    // console.log(props.getMovie("d088f038-a2a0-11e8-9a3a-720006ceb890"));
     setMovies(props.movies.movies);
+    // console.log("final props");
+    // console.log(props);
   }, []);
   console.log("Getting the list");
   console.log(movieList);
@@ -54,12 +60,21 @@ function GridList2(props) {
   // setMovies(movies);
   // console.log("result");
   // console.log(props.movies.movies);
+  // {{
+  //   pathname:"/details",
+  //   {"selectedMovieId": "d088f038-a2a0-11e8-9a3a-720006ceb890"},
+  // }}
   return (
     <GridList cols={4} cellHeight={350} style={{ padding: 2, margin: 1 }}>
       {props.movies.movies.map((item) => (
         <GridListTile key={item.poster_url} className={classes.imageList}>
           <img src={item.poster_url} alt={item.title} />
-          <Link to="/details">
+          <Link
+            to={{
+              pathname: "/details",
+              selectedMovieId: { ...item },
+            }}
+          >
             <GridListTileBar title={item.title} className={classes.titleBar} />
           </Link>
         </GridListTile>
@@ -70,4 +85,4 @@ function GridList2(props) {
 
 const mapStateToProps = (state) => ({ movies: state.movies });
 
-export default connect(mapStateToProps, { getMovies })(GridList2);
+export default connect(mapStateToProps, { getMovies, getMovie })(GridList2);
