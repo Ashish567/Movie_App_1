@@ -1,7 +1,7 @@
 import { GET_MOVIE } from "../types";
 
 const initialState = {
-  movie: [],
+  movie: {},
   loading: true,
 };
 
@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
     case GET_MOVIE:
       return {
         ...state,
-        movie: action.payload,
+        movie: { ...action.payload },
         loading: false,
       };
     default:

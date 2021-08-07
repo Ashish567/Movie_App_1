@@ -7,6 +7,8 @@ import Modal from "@material-ui/core/Modal";
 import Modalz from "./Modal";
 import { useLocation } from "react-router-dom";
 
+import { connect } from "react-redux";
+
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -33,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+function Header(props) {
+  console.log("header section");
+  // console.log(localStorage.getItem("jwtToken"));
+  console.log(props);
   const classes = useStyles();
   const location = useLocation();
   console.log("header " + location.pathname);
@@ -41,6 +46,8 @@ export default function Header() {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const [status, setStatus] = React.useState("Login");
+  // if (localStorage.getItem("jwtToken")) setStatus("Log Out");
 
   const handleOpen = () => {
     setOpen(true);
@@ -67,7 +74,7 @@ export default function Header() {
           console.log("hello")
         )}
         <Button className="button2" variant="contained" onClick={handleOpen}>
-          Login
+          {localStorage.getItem("jwtToken") !== null ? "Log Out" : "Log In"}
         </Button>
       </div>
       <Modal
@@ -81,3 +88,20 @@ export default function Header() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  loginStatus: state.login,
+});
+
+// const mapDispatchToProps = (dispatch) => ({
+//   loginUser: (data) => {
+//     dispatch(loginUserAction(data));
+//     // dispatch(navigateTo({ routeName: 'myMsgList' }));
+//   },
+//   registerUser: (data) => {
+//     dispatch(registerUserAction(data));
+//     // dispatch(navigateTo({ routeName: 'myMsgList' }));
+//   },
+// });
+
+export default connect(mapStateToProps, null)(Header);

@@ -16,7 +16,6 @@ import Rating from "@material-ui/lab/Rating";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import GridListTile from "@material-ui/core/GridListTile";
 import { GridList } from "@material-ui/core";
-import { getMovie } from "../../Actions/usersActions";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles({
@@ -40,7 +39,7 @@ const useStyles = makeStyles({
 
 function Details(props) {
   console.log("Receiving props in Details Page");
-  console.log(props.location.selectedMovieId);
+
   const {
     poster_url,
     title,
@@ -52,38 +51,9 @@ function Details(props) {
     trailer_url,
     wiki_url,
     artists,
-  } = props.location.selectedMovieId;
+  } = props.movie;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [movie, setMovie] = useState({});
-  console.log("movie");
-  console.log(props);
-
-  // data;
-
-  // useEffect(() => {
-  //   fetch(
-  //     `http://localhost:8085/api/v1/movies/${props.location.selectedMovieId}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((ress) => {
-  //       console.log("hook");
-  //       console.log(ress);
-  //       setMovie({ ...movie, ...ress });
-  //     });
-  // }, []);
-
-  // React.useEffect(() => {
-  //   console.log(props.getMovie(props.location.selectedMovieId));
-  //   console.log("in use effect trig");
-  //   console.log(movie);
-  //   setMovie(props.movie.movie);
-  //   console.log("final props");
-  //   console.log(props);
-  //   console.log(movie);
-  // }, []);
-
-
 
   function _onReady(event) {
     event.target.playVideo();
@@ -98,6 +68,10 @@ function Details(props) {
     },
   };
   // return "Hello";
+  if (props.loading) {
+    console.log("loading....");
+    return "loading....";
+  }
   return (
     <div>
       <Header />
@@ -187,7 +161,7 @@ function Details(props) {
                 setValue(newValue);
               }}
             />
-            {artists.length > 0 ? (
+            {artists !== null && artists.length > 0 ? (
               <GridList
                 cols={2}
                 cellHeight={350}
@@ -210,7 +184,10 @@ function Details(props) {
                 ))}
               </GridList>
             ) : (
-              ""
+              <div>
+                <br />
+                <p>No Artists Found</p>
+              </div>
             )}
           </div>
         </Box>
@@ -219,6 +196,8 @@ function Details(props) {
   );
 }
 
-const mapStateToProps = (state) => ({ movie: state.movie });
+const mapStateToProps = (state) => {
+  return { movie: state.movie.movie, loading: state.movie.loading };
+};
 
-export default connect(mapStateToProps, { getMovie })(Details);
+export default connect(mapStateToProps)(Details);

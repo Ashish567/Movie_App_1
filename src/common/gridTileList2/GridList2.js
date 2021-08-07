@@ -48,22 +48,17 @@ function GridList2(props) {
   React.useEffect(() => {
     props.getMovies({ page: 1, limit: 20 });
     console.log("1st loaded");
-    // console.log(getMovie);
-    // console.log(props.getMovie("d088f038-a2a0-11e8-9a3a-720006ceb890"));
     setMovies(props.movies.movies);
-    // console.log("final props");
-    // console.log(props);
   }, []);
-  console.log("Getting the list");
-  console.log(movieList);
-  // const movies = props.movies.movies;
-  // setMovies(movies);
-  // console.log("result");
-  // console.log(props.movies.movies);
-  // {{
-  //   pathname:"/details",
-  //   {"selectedMovieId": "d088f038-a2a0-11e8-9a3a-720006ceb890"},
-  // }}
+  // console.log("Getting the list");
+  // console.log(movieList);
+
+  const getSelectedMovie = (event, d) => {
+    // console.log("clicked");
+    // console.log(event);
+    // console.log(d.id);
+    props.getMovie(d.id);
+  };
   return (
     <GridList cols={4} cellHeight={350} style={{ padding: 2, margin: 1 }}>
       {props.movies.movies.map((item) => (
@@ -74,6 +69,7 @@ function GridList2(props) {
               pathname: "/details",
               selectedMovieId: { ...item },
             }}
+            onClick={(event) => getSelectedMovie(event, item)}
           >
             <GridListTileBar title={item.title} className={classes.titleBar} />
           </Link>
@@ -85,4 +81,13 @@ function GridList2(props) {
 
 const mapStateToProps = (state) => ({ movies: state.movies });
 
-export default connect(mapStateToProps, { getMovies, getMovie })(GridList2);
+const mapDispatchToProps = (dispatch) => ({
+  getMovies: (params) => {
+    dispatch(getMovies(params));
+  },
+  getMovie: (params) => {
+    dispatch(getMovie(params));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GridList2);

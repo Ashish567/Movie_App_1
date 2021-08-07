@@ -196,7 +196,7 @@ const BookShow = (props) => {
       <Header baseUrl={props.baseUrl} />
       <div className="bookShow">
         <Typography className="back">
-          <Link to={"/movie/" + props.match.params.id}>
+          <Link to={"/movies/" + props.match.params.id}>
             &#60; Back to Movie Details
           </Link>
         </Typography>
@@ -285,9 +285,7 @@ const BookShow = (props) => {
             <br />
             <Typography>Unit Price: Rs. {unitPrice}</Typography>
             <br />
-            <Typography>
-              Total Price: Rs. {unitPrice * tickets}
-            </Typography>
+            <Typography>Total Price: Rs. {unitPrice * tickets}</Typography>
             <br />
             <br />
             <Button

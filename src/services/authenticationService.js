@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 export const registerUserService = (request) => {
   const REGISTER_API_ENDPOINT = "http://localhost:8085/api/v1/signup/";
@@ -26,32 +27,38 @@ export const registerUserService = (request) => {
     .catch((err) => console.error("Caught error: ", err));
 };
 
-export const loginUserService = (request) => {
+export const loginUserService = async (request) => {
   const LOGIN_API_ENDPOINT = "http://localhost:8085/api/v1/auth/login";
   console.log("Login user fetch");
-  console.log(request.user.username);
-  console.log(request.user.password);
-  console.log();
   let encodedData =
     "Basic " + window.btoa(request.user.username + ":" + request.user.password);
 
   console.log(encodedData);
   const parameters = {
     method: "POST",
+    mode: "cors",
     "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST",
     headers: {
-      "Content-Type": "application/json",
-      authorization: encodedData,
+      Authorization: encodedData,
     },
-    // body: JSON.stringify(request.user),
   };
 
-  return fetch(LOGIN_API_ENDPOINT, parameters)
+  return await fetch(LOGIN_API_ENDPOINT, parameters)
     .then((response) => {
-      return response.json();
+      response.headers.forEach(function(val, key) {
+        console.log(key + " -> " + val);
+        if (key === "access-token") {
+          localStorage.setItem("jwtToken", val);
+        }
+      });
+      return response;
     })
+    .then((response) => response.json())
     .then((json) => {
+      console.log("api hit");
       console.log(json);
       return json;
-    });
+    })
+    .catch((err) => console.error("Caught error: ", err));
 };

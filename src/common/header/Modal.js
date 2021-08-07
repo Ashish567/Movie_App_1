@@ -121,9 +121,11 @@ function Modal(props) {
     const elements = e.target.elements;
     if (e.target.id === "loginForm") {
       console.log("logging");
-      console.log(loginValues);
-      console.log(loginUserAction);
-      props.dispatch(loginUserAction(loginValues));
+      // console.log(loginValues);
+      // console.log(loginUserAction);
+      console.log(props);
+      props.loginUser(loginValues);
+      // props.dispatch(loginUserAction(loginValues));
     }
     if (e.target.id === "signUpForm") {
       console.log("signningUp");
@@ -151,11 +153,9 @@ function Modal(props) {
         console.log("yes");
       }
       if (!temp.includes(true)) {
-        console.log("f***********");
-        console.log("Dispatching User Registration Action");
-        console.log(signUpValues);
-        console.log("breaker");
-        props.dispatch(registerUserAction(signUpValues));
+        console.log(props);
+        props.registerUser(signUpValues);
+        // props.dispatch(registerUserAction(signUpValues));
       }
 
       // if (errorFlag === false) setShowResults(true);
@@ -300,4 +300,16 @@ const mapStateToProps = (response) => ({
   response,
 });
 
-export default connect(mapStateToProps)(Modal);
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (data) => {
+    dispatch(loginUserAction(data));
+    // dispatch(navigateTo({ routeName: 'myMsgList' }));
+  },
+  registerUser: (data) => {
+    dispatch(registerUserAction(data));
+    // dispatch(navigateTo({ routeName: 'myMsgList' }));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+// registerUserAction
