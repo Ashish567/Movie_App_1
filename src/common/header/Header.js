@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Header.css";
 import Logo from "../../assets/logo.svg";
 import Button from "@material-ui/core/Button";
@@ -9,9 +9,7 @@ import { useLocation } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import { Link } from "react-router-dom";
 
 function getModalStyle() {
   const top = 50;
@@ -46,11 +44,23 @@ function Header(props) {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState("Login");
+  const [status, setStatus] = React.useState(true);
   // if (localStorage.getItem("jwtToken")) setStatus("Log Out");
+  // useEffect(() => {
+  //   // Update the document title using the browser API
+  //   console.log("api hit login ");
+  //   // if (localStorage.getItem("jwtToken")) setStatus("Log Out");
+  // }, [status]);
 
   const handleOpen = () => {
-    setOpen(true);
+    if (!localStorage.getItem("jwtToken")) {
+      setOpen(true);
+      setStatus(true);
+    }
+    if (localStorage.getItem("jwtToken")) {
+      localStorage.removeItem("jwtToken");
+      setStatus(false);
+    }
   };
 
   const handleClose = () => {
@@ -62,13 +72,23 @@ function Header(props) {
       <Modalz />
     </div>
   );
+  // <Link to="/bookshow" params={{ movieId: props.movieIdSelected }}></Link>
   return (
     <div className="header">
       <img src={Logo} alt="React Logo" className="logo" />
       <div>
         {location.pathname.toString() === "/details" ? (
-          <Button variant="contained" className="button1" onClick={handleOpen}>
-            Book Show
+          <Button variant="contained" className="button1">
+            <Link
+              to={{
+                pathname: "/bookshow",
+                selectedMovie: props.movieIdSelected,
+              }}
+            >
+              {console.log("hello header")}
+              {console.log(props.movieIdSelected)}
+              Book Show
+            </Link>
           </Button>
         ) : (
           console.log("hello")
@@ -89,19 +109,13 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  loginStatus: state.login,
-});
-
-// const mapDispatchToProps = (dispatch) => ({
-//   loginUser: (data) => {
-//     dispatch(loginUserAction(data));
-//     // dispatch(navigateTo({ routeName: 'myMsgList' }));
-//   },
-//   registerUser: (data) => {
-//     dispatch(registerUserAction(data));
-//     // dispatch(navigateTo({ routeName: 'myMsgList' }));
-//   },
-// });
+const mapStateToProps = (state) => {
+  console.log("finding header state");
+  console.log(state);
+  return {
+    loginStatus: state.login,
+    movieIdSelected: state.movie.movie.id,
+  };
+};
 
 export default connect(mapStateToProps, null)(Header);

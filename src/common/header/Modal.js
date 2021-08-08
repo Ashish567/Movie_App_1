@@ -26,6 +26,9 @@ import {
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
+  console.log("Page Loading");
+  console.log(props);
+
   return (
     <div
       role="tabpanel"
@@ -303,13 +306,10 @@ const mapStateToProps = (response) => ({
 const mapDispatchToProps = (dispatch) => ({
   loginUser: (data) => {
     dispatch(loginUserAction(data));
-    // dispatch(navigateTo({ routeName: 'myMsgList' }));
   },
   registerUser: (data) => {
     dispatch(registerUserAction(data));
-    // dispatch(navigateTo({ routeName: 'myMsgList' }));
   },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);
-// registerUserAction

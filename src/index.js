@@ -21,29 +21,8 @@ import store from "./store.js";
 import { Provider } from "react-redux";
 
 import ProtectedRoute from "./ProtectedRoute";
+import AuthRoute from "./AuthRoute";
 
-// const store = createStore(rootReducer, applyMiddleware(thunk));
-// function isLoggedIn() {
-//   if (localStorage.getItem("jwtToken")) {
-//     console.log("logged in user");
-//     return true;
-//   }
-
-//   return false;
-// }
-
-// function requireAuth(nextState, replace) {
-//   if (!isLoggedIn()) {
-//     replace({
-//       pathname: "/",
-//     });
-//   }
-// }
-
-// function error() {
-//   return "404 not found";
-// }
-console.log(ProtectedRoute);
 ReactDOM.render(
   <Provider store={store}>
     <Router>

@@ -50,13 +50,8 @@ function GridList2(props) {
     console.log("1st loaded");
     setMovies(props.movies.movies);
   }, []);
-  // console.log("Getting the list");
-  // console.log(movieList);
 
   const getSelectedMovie = (event, d) => {
-    // console.log("clicked");
-    // console.log(event);
-    // console.log(d.id);
     props.getMovie(d.id);
   };
   return (

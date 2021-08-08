@@ -39,6 +39,7 @@ const useStyles = makeStyles({
 
 function Details(props) {
   console.log("Receiving props in Details Page");
+  console.log(props);
 
   const {
     poster_url,

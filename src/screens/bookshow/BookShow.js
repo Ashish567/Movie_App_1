@@ -14,6 +14,9 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { Link } from "react-router-dom";
 
 const BookShow = (props) => {
+  console.log("book show page");
+  console.log(props);
+  console.log(props.match);
   const [location, setLocation] = useState("");
   const [theatre, setTheatre] = useState("");
   const [language, setLanguage] = useState("");
@@ -190,13 +193,18 @@ const BookShow = (props) => {
       },
     });
   };
-
+  // <Link to={"/details" + props.match.params.id}>
   return (
     <div>
       <Header baseUrl={props.baseUrl} />
       <div className="bookShow">
         <Typography className="back">
-          <Link to={"/movies/" + props.match.params.id}>
+          <Link
+            to={{
+              pathname: "/details",
+              selectedMovieId: props.location.selectedMovieId,
+            }}
+          >
             &#60; Back to Movie Details
           </Link>
         </Typography>
